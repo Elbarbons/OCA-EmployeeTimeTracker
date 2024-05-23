@@ -1,76 +1,72 @@
 # OCA-EmployeeTimeTracker
-OCA-EmployeeTimeTracker is a Python application designed to manage and track employees' working hours in a company. It allows you to log work hours, generate timesheets, and create reports to ensure efficient time management and payroll processing. It was created for free for an italian company composed of 50 employees, to speed up payroll processing and to better manage working hours allocated to projects based on the projects' budget.
+OCA-EmployeeTimeTracker is a Python application designed to manage and track employees' working hours in a company. It allows you to log work hours, generate timesheets, and create reports to ensure efficient time management and payroll processing. It was created for free for an Italian company composed of 50 employees to speed up payroll processing and better manage working hours allocated to projects based on the projects' budget. The application is written in Python using the library *ttkinter* and utilizes an SQL database to store and retrieve all the data.
 
 ## Features
 - **Login page**
   
 ![Login page.](Images/Login.png)
 
-- **Worker page:** where workers can log work hours and consult, sort, filter and delete previously inserted work hours.
+- **Worker page:** where workers can log work hours and consult, sort, filter, and delete previously inserted work hours.
 
 ![Worker page.](Images/WorkerPage.png)
 
 - **Manager page**: managers can access to a menu in which they can navigate to three different screens:
-  + one where they can define new client and jobs
-  + one where they can consult workers work hours grouped by client, job, type of job (usefull to check amount of working hours spend on different projects).
-  + one where they can consult workers work hours grouped by workers name, job, type of job (usefull to create paychecks at the end of the month).
+  + One where they can define new clients and jobs
+  + One where they can consult workers' work hours grouped by client, job, and type of job (useful to check the amount of working hours spent on different projects)
+  + One where they can consult workers' work hours grouped by worker name, job, and type of job (useful for creating paychecks at the end of the month)
 
 ![Manager page.](Images/ManagerPage.png)
 
-- **Admin page**: admins can insert / delete / edit users.
+- **Admin page**: admins can insert, delete, and edit users.
+
+- **Logs writing**: the application automatically logs all the errors in a .log file.
 
 ## Installation
 To install and run the application, follow these steps:
 
-Clone the repository:
+1. Clone the repository:
 ```console
 git clone https://github.com/Elbarbons/OCA-EmployeeTimeTracker.git
 ```
 
-Install the required dependencies:
+2. Install the required dependencies:
 ```console
 pip install -r requirements.txt
 ```
 
-bash
-Copia codice
-python3 -m venv venv
-source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-Install the required dependencies:
+3. Create the database and the tables needed for the application to work. These are the required tables:
+   
+ - **oca.users** :
+   + Username  [VARCHAR(100)] PK - Not Nullable
+   + Password  [VARCHAR(100)] Not Nullable
+   + Ruolo  [VARCHAR(100)] Not Nullable
+   + Nome  [VARCHAR(100)] Not Nullable
+   + Cognome  [VARCHAR(100)] Not Nullable
+   + CostoOrario [INT], firstLogin[INT]
 
-bash
-Copia codice
-pip install -r requirements.txt
-Run the application:
+ - **oca.commesse**:
+   + Nome [VARCHAR(100)] PK - Not Nullable
+   + Tipo [VARCHAR(100)] PK - Not Nullable
+   + Cliente  [VARCHAR(100)], Descrizione  [VARCHAR(200)]
+   + Budget [INT]
+ 
+ - **oca.storico_commesse** :
+   + CognomeLavoratore [VARCHAR(100)] PK - Not Nullable
+   + Data [Date] PK - Not Nullable
+   + Ore [INT] PK - Not Nullable
+   + Commessa [VARCHAR(100)] PK - Not Nullable
+   + TipoCommesa [VARCHAR(100)] PK - Not Nullable
+   + Cliente [VARCHAR(100)] PK - Not Nullable
 
-bash
-Copia codice
+4. To connect to your database, set the HOST, USER, PASSWORD, and DB variables in the DBOperations.py file.
+
+5. Run the application:
+```console
 python main.py
-
-## Usage
-Launch the application using the command python main.py.
-Use the interface to:
-Add employees and their details.
-Log their working hours.
-Generate timesheets and reports.
+```
 
 ## Contributing
-Contributions are welcome! Please follow these steps to contribute:
-
-Fork the repository.
-Create a new branch:
-bash
-Copia codice
-git checkout -b feature/your-feature-name
-Make your changes and commit them:
-bash
-Copia codice
-git commit -m "Add your message here"
-Push to the branch:
-bash
-Copia codice
-git push origin feature/your-feature-name
-Open a pull request.
+Contributions are welcome! 
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
